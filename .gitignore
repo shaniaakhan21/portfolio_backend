@@ -1,0 +1,65 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.venv/
+venv.bak/
+venv.bak/
+env.bak/
+env.bak/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+
+# Media files
+media/
+
+# Static files (if using collectstatic)
+staticfiles/
+
+# Ignore coverage files
+.coverage
+htmlcov/
+.coverage.*
+.cache
+nosetests.xml
+test-results/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# Pytest
+.cache/
+pytestdebug.log
+
+# IDE/editor files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Python environment variables
+.env
+*.env
+
+# OS specific files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Any other files you want to ignore

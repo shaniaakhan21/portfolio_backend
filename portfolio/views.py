@@ -1,15 +1,21 @@
-# your_app/views.py
-from django.shortcuts import render, get_object_or_404
+#views.py
+from django.http import JsonResponse
 from rest_framework import viewsets
 from .models import Post
 from .serializers import PostSerializer
 
-# This function handles rendering a specific post for a company
 def application_post_view(request, company_name):
-    post = get_object_or_404(Post, company_name=company_name)
-    return render(request, 'application_post.html', {'post': post})
+    print(f"Received request for company: {company_name}")
 
-# This class-based view handles API requests for posts
+    # Fetch posts based on the company_name
+    posts = Post.objects.filter(company_name=company_name)
+
+    # Serialize posts to JSON using the serializer
+    data = PostSerializer(posts, many=True, context={'request': request}).data  # Using the serializer to handle serialization
+
+    return JsonResponse(data, safe=False)
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
