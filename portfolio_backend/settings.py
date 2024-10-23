@@ -60,6 +60,7 @@ ROOT_URLCONF = 'portfolio_backend.urls'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://shaniya-pro.netlify.app',
 ]
 
 TEMPLATES = [
