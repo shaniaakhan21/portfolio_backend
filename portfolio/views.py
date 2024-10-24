@@ -8,7 +8,7 @@ def application_post_view(request, company_name):
     print(f"Received request for company: {company_name}")
 
     # Fetch posts based on the company_name
-    posts = Post.objects.filter(company_name=company_name)
+    posts = Post.objects.filter(company_name__iexact=company_name)
 
     # Serialize posts to JSON using the serializer
     data = PostSerializer(posts, many=True, context={'request': request}).data  # Using the serializer to handle serialization

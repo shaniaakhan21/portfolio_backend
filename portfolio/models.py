@@ -13,6 +13,12 @@ class Post(models.Model):
     def clean(self):
         if self.pinned:
             Post.objects.filter(pinned=True).update(pinned=False)
+            
+    def save(self, *args, **kwargs):
+        # Normalize company_name to lowercase before saving
+        if self.company_name:
+            self.company_name = self.company_name.lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
