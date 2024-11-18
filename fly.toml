@@ -1,0 +1,16 @@
+app = "portfolio_backend"
+
+[deploy]
+release_command = "python manage.py migrate --noinput"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls"]
+    port = 443
