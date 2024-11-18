@@ -7,6 +7,9 @@ ENV PYTHONUNBUFFERED 1
 # Step 3: Set the working directory in the container
 WORKDIR /app
 
+# Install the required dependencies
+RUN apt-get update && apt-get install -y libpq-dev gcc
+
 # Step 4: Install system dependencies and Python dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
