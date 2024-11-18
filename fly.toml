@@ -1,7 +1,7 @@
 app = "portfolio-backend-rf4bsw"
 
 [build]
-  dockerfile = "Dockerfile
+  dockerfile = "Dockerfile"
 
 [deploy]
 release_command = "python manage.py migrate --noinput"
