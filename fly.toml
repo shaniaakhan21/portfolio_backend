@@ -1,8 +1,8 @@
 app = "portfolio_backend"
 
 [build]
-  builder = "heroku/buildpacks:python"
-  
+  dockerfile = "Dockerfile
+
 [deploy]
 release_command = "python manage.py migrate --noinput"
 
