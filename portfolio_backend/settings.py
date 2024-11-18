@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-y9k_8-1q-s=4wnj(83so+vudfnbdklt)i!g!=fey=-99p!qmj4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['https://shaniya-3183dda3bfb6.herokuapp.com','127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -83,19 +83,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shaniyadb',
-        'USER': 'postgres',
-        'PASSWORD': '9779778731sK@',
-        'HOST': 'shaniyadb.postgres.database.azure.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': 'django.db.backends.postgresql',  # Use PostgreSQL
+        'NAME': os.environ.get('DB_NAME', 'portfolio_shaniya'),  # Default value for local
+        'USER': os.environ.get('DB_USER', 'postgres'),  # Default value for local
+        'PASSWORD': os.environ.get('DB_PASSWORD', '9779778731'),  # Default value for local
+        'HOST': os.environ.get('DB_HOST', 'localhost'),  # Default value for local
+        'PORT': os.environ.get('DB_PORT', '5432'),  # Default value for local
     }
 }
+# Use dj-database-url for Heroku
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
