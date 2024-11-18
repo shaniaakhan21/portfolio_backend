@@ -4,7 +4,7 @@ app = "portfolio-backend-rf4bsw"
   dockerfile = "Dockerfile"
 
 [deploy]
-release_command = "python manage.py migrate --noinput"
+  release_command = "python manage.py migrate --noinput"
 
 [[services]]
   internal_port = 8080
