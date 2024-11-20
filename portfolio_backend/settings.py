@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y9k_8-1q-s=4wnj(83so+vudfnbdklt)i!g!=fey=-99p!qmj4'
+SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://shaniya-3183dda3bfb6.herokuapp.com','127.0.0.1', 'localhost', 'shaniya-3183dda3bfb6.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'shaniya-3183dda3bfb6.herokuapp.com']
 
 
 # Application definition
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -87,18 +90,27 @@ WSGI_APPLICATION = 'portfolio_backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Use PostgreSQL
-        'NAME': os.environ.get('DB_NAME', 'portfolio_shaniya'),  # Default value for local
-        'USER': os.environ.get('DB_USER', 'postgres'),  # Default value for local
-        'PASSWORD': os.environ.get('DB_PASSWORD', '9779778731'),  # Default value for local
-        'HOST': os.environ.get('DB_HOST', 'localhost'),  # Default value for local
-        'PORT': os.environ.get('DB_PORT', '5432'),  # Default value for local
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='portfolio_shaniya'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='9779778731'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 # Use dj-database-url for Heroku
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
+# Azure Storage settings
+AZURE_ACCOUNT_NAME = config('AZURE_ACCOUNT_NAME')  # e.g., 'mystorageaccount'
+AZURE_ACCOUNT_KEY = config('AZURE_ACCOUNT_KEY')    # Access Key from Azure
+AZURE_CONTAINER = config('AZURE_CONTAINER', default='media')  # Blob container name
+
+# Media settings
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+AZURE_CUSTOM_DOMAIN = config('AZURE_CUSTOM_DOMAIN')
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -144,7 +156,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
