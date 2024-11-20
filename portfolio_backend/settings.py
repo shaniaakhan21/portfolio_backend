@@ -110,7 +110,7 @@ AZURE_CONTAINER = config('AZURE_CONTAINER', default='media')  # Blob container n
 # Media settings
 DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 AZURE_CUSTOM_DOMAIN = config('AZURE_CUSTOM_DOMAIN')
-MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
+MEDIA_URL = f'{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
